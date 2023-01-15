@@ -581,6 +581,25 @@ namespace BatchRename
             List<IRule> folderRename = new List<IRule>();
             Dictionary<string, string> storeName = new Dictionary<string, string>();
 
+            string newLocation = "";
+            bool isMoved = false;
+
+            if (RenameAndMoveToNewFolder.IsChecked == true)
+            {
+                var dialog = new System.Windows.Forms.FolderBrowserDialog();
+                var result = dialog.ShowDialog();
+
+                string path = "";
+
+                if (result == System.Windows.Forms.DialogResult.OK)
+                {
+                    path = dialog.SelectedPath;
+                    isMoved = true;
+                }
+
+                newLocation = path;
+            }
+
             if (listViewFiles.Count > 0)
             {
                 foreach (IRule rule in selectedRules)
@@ -603,7 +622,7 @@ namespace BatchRename
                     foreach (var resolver in fileRename)
                         file.ReName = resolver.ReName(file.ReName);
 
-                    string location = file.Path + "/" + file.ReName;
+                    string location = (isMoved == true ? newLocation : file.Path) + file.ReName;
 
                     if (storeName.ContainsKey(location))
                     {
@@ -641,7 +660,7 @@ namespace BatchRename
                     foreach (var resolver in folderRename)
                         folder.ReName = resolver.ReName(folder.ReName, false);
 
-                    string location = folder.Path + folder.ReName;
+                    string location = (isMoved == true ? newLocation : folder.Path) + folder.ReName;
 
                     if (storeName.ContainsKey(location))
                     {
@@ -670,25 +689,6 @@ namespace BatchRename
             }
 
             // If no error is found, then start batching 
-
-            string newLocation = "";
-            bool isMoved = false;
-
-            if (RenameAndMoveToNewFolder.IsChecked == true)
-            {
-                var dialog = new System.Windows.Forms.FolderBrowserDialog();
-                var result = dialog.ShowDialog();
-
-                string path = "";
-
-                if (result == System.Windows.Forms.DialogResult.OK)
-                {
-                    path = dialog.SelectedPath;
-                    isMoved = true;
-                }
-
-                newLocation = path;
-            }
 
             int itemCount = 0;
           
