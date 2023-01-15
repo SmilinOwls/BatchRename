@@ -113,3 +113,4 @@ open BatchRename.exe
 11. Create a copy of all the files and move them to a selected folder rather than perform the renaming on the original file
 12. Filter + Search the file or folder 
 13. Strong Responsive UI to ensure the WPF UI has not broke down
+14. Customize the Window with `Fluent.RibbonWindow` and hook up with keyboard 
