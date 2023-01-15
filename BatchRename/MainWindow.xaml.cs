@@ -31,8 +31,7 @@ namespace BatchRename
         private BindingList<Model> itemTypes;
         private BindingList<IRule> rules = new BindingList<IRule>();
         private BindingList<IRule> selectedRules = new BindingList<IRule>();
-        private BindingList<IRule> conflictActions = new BindingList<IRule>();
-
+       
         private ObservableCollection<FileFormat> listViewFiles = new ObservableCollection<FileFormat>();
         private ObservableCollection<FolderFormat> listViewFolders = new ObservableCollection<FolderFormat>();
 
