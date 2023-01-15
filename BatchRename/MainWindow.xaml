@@ -1,0 +1,212 @@
+﻿<Fluent:RibbonWindow x:Class="BatchRename.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BatchRename"
+        xmlns:Fluent="clr-namespace:Fluent;assembly=Fluent"               
+        mc:Ignorable="d"
+        Title="{Binding projectName}" Height="600" Width="980" 
+        WindowStartupLocation="CenterScreen"
+        ContentRendered="Window_ContentRendered"
+        Loaded="MainWindow_Loaded" >
+    <StackPanel Orientation="Vertical" Height="704" VerticalAlignment="Top" >
+        <Fluent:Ribbon>
+            <Fluent:Ribbon.Menu>
+                <Fluent:Backstage Height="25" VerticalAlignment="Top">
+                    <Fluent:BackstageTabControl>
+                        <Fluent:BackstageTabItem Header="New" />
+                        <Fluent:BackstageTabItem Header="Open">
+                            <Fluent:BackstageTabItem.ContentTemplate>
+                                <DataTemplate>
+                                    <DockPanel LastChildFill="True" Margin="30,80,30,80">
+                                        <TextBlock Text="Open" FontSize="30" Background="LightSkyBlue" DockPanel.Dock="Top"/>
+                                        <StackPanel HorizontalAlignment="Center">
+                                            <Fluent:Button Header="Open From Project" LargeIcon="icons/open-project.png" Click="LoadProject" Margin="0,10,0,10"/>
+                                            <Fluent:Button Header="Open From JSON" LargeIcon="icons/open-json.png" Click="LoadJSON" Margin="0,10,0,10"/>
+                                        </StackPanel>
+                                    </DockPanel>
+                                </DataTemplate>
+                            </Fluent:BackstageTabItem.ContentTemplate>
+                        </Fluent:BackstageTabItem>
+                        <Fluent:BackstageTabItem Header="Save">
+                            <Fluent:BackstageTabItem.ContentTemplate>
+                                <DataTemplate>
+                                    <DockPanel LastChildFill="True" Margin="30,80,30,80">
+                                        <TextBlock Text="Save" FontSize="30" Background="LightSkyBlue" DockPanel.Dock="Top"/>
+                                        <StackPanel HorizontalAlignment="Center">
+                                            <Fluent:Button Header="Save As Project" LargeIcon="icons/save-project.png" Click="SaveProject" Margin="0,10,0,10"/>
+                                            <Fluent:Button Header="Save As JSON" LargeIcon="icons/save-json.png" Click="SaveJSON" Margin="0,10,0,10"/>
+                                        </StackPanel>
+                                    </DockPanel>
+                                </DataTemplate>
+                            </Fluent:BackstageTabItem.ContentTemplate>
+                        </Fluent:BackstageTabItem>
+                        <Fluent:Button Header="Close" />
+                    </Fluent:BackstageTabControl>
+                </Fluent:Backstage>
+            </Fluent:Ribbon.Menu>
+            <Fluent:RibbonTabItem Header="Home">
+                <Fluent:RibbonGroupBox Header="Items" Margin="0, 10, 0, 10">
+                    <Fluent:ComboBox Name="TypeComboBox" Width="120" Height="24" Text="Select type" DropDownClosed="typeComboBox_DropDownClosed" Margin="5, 10, 0, 10">
+                        <Fluent:ComboBox.ItemTemplate>
+                            <ItemContainerTemplate>
+                                <WrapPanel Width="100">
+                                    <Image Source="{Binding Icon}" Height="15" Width="15" Margin="0,0,5,0"/>
+                                    <TextBlock Text="{Binding Name}"/>
+                                </WrapPanel>
+                            </ItemContainerTemplate>
+                        </Fluent:ComboBox.ItemTemplate>
+                    </Fluent:ComboBox>
+
+                </Fluent:RibbonGroupBox>
+                <Fluent:RibbonGroupBox Header="Rules" Margin="0, 10, 0, 10">
+                    <Fluent:ComboBox Name="RuleComboxBox" Width="200" Height="24" Text="Select rule"  Margin="5, 10, 0, 10">
+                        <Fluent:ComboBox.ItemTemplate>
+                            <ItemContainerTemplate>
+                                <WrapPanel Width="180">
+                                    <Image Source="icons/plus.png" Height="15" Width="15" Margin="0,0,5,0"/>
+                                    <TextBlock Text="{Binding}"/>
+                                </WrapPanel>
+                            </ItemContainerTemplate>
+                        </Fluent:ComboBox.ItemTemplate>
+                    </Fluent:ComboBox>
+                    <DockPanel Margin="10,0,0,0">
+                        <Fluent:Button Header="Add" Fluent:KeyTip.Keys="A" DockPanel.Dock="Top" SizeDefinition="Middle" Icon="icons/add.png" Margin="0, 10, 0, 0"  Click="AddRule"/>
+                        <Fluent:Button Header="Reset" Fluent:KeyTip.Keys="R" SizeDefinition="Middle" Icon="icons/reset.png" Click="ResetRule"/>
+                    </DockPanel>
+                </Fluent:RibbonGroupBox>
+                <Fluent:RibbonGroupBox Header="Exporting" Margin="0, 10, 0, 10">
+                    <Fluent:RadioButton Name="RenameOriginal" Header="Original" Margin="0, 10, 0, 0" IsChecked="True"/>
+                    <Fluent:RadioButton Name="RenameAndMoveToNewFolder" Header="New Folder"/>
+                </Fluent:RibbonGroupBox>
+                <Fluent:RibbonGroupBox Header="Generating" Margin="0, 10, 0, 10">
+                    <Fluent:Button Header="Preview" Fluent:KeyTip.Keys="P" LargeIcon="icons/preview.png" Click="Preview" Margin="10,0,10,0"/>
+                    <Fluent:Button Header="Start" Fluent:KeyTip.Keys="S" LargeIcon="icons/start.png" Click="Start" Margin="10,0,10,0"/>
+                </Fluent:RibbonGroupBox>
+            </Fluent:RibbonTabItem>
+            <Fluent:RibbonTabItem Header="Options">
+                <Fluent:RibbonGroupBox>
+
+                </Fluent:RibbonGroupBox>
+            </Fluent:RibbonTabItem>
+
+            <Fluent:RibbonTabItem Header="Help">
+                <Fluent:RibbonGroupBox>
+
+                </Fluent:RibbonGroupBox>
+            </Fluent:RibbonTabItem>
+        </Fluent:Ribbon>
+        <Grid>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.5*" />
+                <ColumnDefinition Width="1.5*" />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Column="0" Margin="6,0,0,0">
+                <Label Content="Selected Rules List"/>
+                <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Button Width="40" Height="30" Background="Transparent" BorderThickness="0" Click="MoveRuleToTop">
+                        <Image Source="icons/move-top.png" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        <Button.ToolTip>
+                            <ToolTip Content="Move Rule To Top"/>
+                        </Button.ToolTip>
+                    </Button>
+                    <Button Width="40" Height="30" Background="Transparent" BorderThickness="0" Click="MoveRuleToPrev">
+                        <Image Source="icons/move-pre.png" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        <Button.ToolTip>
+                            <ToolTip Content="Move Rule To Previous"/>
+                        </Button.ToolTip>
+                    </Button>
+                    <Button Width="40" Height="30" Background="Transparent" BorderThickness="0" Click="MoveRuleToNext">
+                        <Image Source="icons/move-next.png" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        <Button.ToolTip>
+                            <ToolTip Content="Move Rule To Next"/>
+                        </Button.ToolTip>
+                    </Button>
+                    <Button Width="40" Height="30" Background="Transparent" BorderThickness="0" Click="MoveRuleToBottom">
+                        <Image Source="icons/move-bottom.png" RenderOptions.BitmapScalingMode="HighQuality"/>
+                        <Button.ToolTip>
+                            <ToolTip Content="Move Rule To Bottom"/>
+                        </Button.ToolTip>
+                    </Button>
+                </WrapPanel>
+                <Fluent:Button Header="Delete Rules" Fluent:KeyTip.Keys="D" HorizontalAlignment="Center" SizeDefinition="Middle" Icon="icons/delete.png" Click="RemoveRule"/>
+                <ListView x:Name="SelectedRulesListView" MinHeight="450" Height="486">
+                    <ListView.Resources>
+                        <ContextMenu x:Key="ChosenRuleContextMenu">
+                            <MenuItem Header="Edit" Click="EditRule"/>
+                            <MenuItem Header="Remove" Click="RemoveRule"/>
+                        </ContextMenu>
+                    </ListView.Resources>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding}" VerticalAlignment="Center"/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListViewItem}" >
+                            <Setter Property="ContextMenu" Value="{StaticResource ChosenRuleContextMenu}" />
+                            <EventSetter Event="Control.MouseDoubleClick" Handler="SelectRule_DoubleClicked" />
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                </ListView>
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" Margin="5,0,8,0">
+                <WrapPanel Margin="0,10,0,0" Orientation="Horizontal" HorizontalAlignment="Center">
+                    <WrapPanel HorizontalAlignment="Center">
+                        <Fluent:ComboBox x:Name="FilterBy" SelectionChanged="FilterBy_SelectionChanged" Width="120" Margin="0,0,10,0"/>
+                        <TextBox x:Name="txtFilter" TextChanged="txtFilter_TextChanged" Width="582"/>
+                    </WrapPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="8,5,0,0">
+                        <Fluent:Button Header="Import" Fluent:KeyTip.Keys="I" SizeDefinition="Middle" Icon="icons/import.png" Click="ImportNewItems_Clicked"/>
+                        <Fluent:Button Header="Clear All Items" Fluent:KeyTip.Keys="C" SizeDefinition="Middle" Icon="icons/clear.png" Click="ResetAddedItems"/>
+                    </StackPanel>
+                    <ListView Name="ItemListView" Height="497" Width="Auto" AllowDrop="True" Drop="importNewItems_Dropped">
+                        <ListView.Resources>
+                            <ContextMenu x:Key="ItemContextMenu">
+                                <MenuItem Header="Clear" Click="ClearItem"/>
+                            </ContextMenu>
+                        </ListView.Resources>
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn x:Name="Name" Header="Name" Width="160" 
+                                            DisplayMemberBinding="{Binding Name}"/>
+                                <GridViewColumn Header="ReName" Width="{Binding ElementName=helperField1, Path=ActualWidth}"
+                                            DisplayMemberBinding="{Binding ReName}" />
+                                <GridViewColumn Header="Path" Width="{Binding ElementName=helperField2, Path=ActualWidth}"
+                                            DisplayMemberBinding="{Binding Path}" />
+                                <GridViewColumn Header="Status" Width="{Binding ElementName=helperField3, Path=ActualWidth}"
+                                            DisplayMemberBinding="{Binding Status}" />
+                            </GridView>
+                        </ListView.View>
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="{x:Type ListViewItem}" >
+                                <Setter Property="ContextMenu" Value="{StaticResource ItemContextMenu}" />
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                    </ListView>
+                </WrapPanel>
+                <Grid Visibility="Hidden">
+                    <Grid.ColumnDefinitions>
+                        <!--Width is bound to width of the first GridViewColumn -->
+                        <ColumnDefinition Width="{Binding ElementName=Name, Path=ActualWidth}"/>
+                        <!--Width is set to "Fill"-->
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="1.5*"/>
+                        <ColumnDefinition Width="0.5*"/>
+                    </Grid.ColumnDefinitions>
+                    <!--This is the hidden helper Field which is used to bind to, using the "Fill" column of the helper grid-->
+                    <Grid Grid.Column="1" x:Name="helperField1"/>
+                    <Grid Grid.Column="2" x:Name="helperField2"/>
+                    <Grid Grid.Column="3" x:Name="helperField3"/>
+                </Grid>
+            </StackPanel>
+        </Grid>
+    </StackPanel>
+</Fluent:RibbonWindow>
