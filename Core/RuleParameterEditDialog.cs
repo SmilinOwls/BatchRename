@@ -69,8 +69,8 @@ namespace Core
             grid.Children.Add(wrapPanel);
 
             this.AddChild(grid);
-            this.MaxWidth = 500;
-            this.MaxHeight = 350;
+            this.MaxWidth = 600;
+            this.MaxHeight = 450;
         }
 
 

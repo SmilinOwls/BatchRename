@@ -49,9 +49,9 @@ cd BatchRename/
 
 ## Usage
 
-- Open file `.exe` in *Release* folder to run all functions to check wether all requirements are completely done
+- Open file `.exe` in *Release* (or *Debug*) folder to run all functions to check wether all requirements are completely done
 ```sh
-cd BatchRename/Release
+cd BatchRename/bin/Release/net6.0-windows or cd BatchRename/bin/Debug/net6.0-windows
 open BatchRename.exe
 ```
 ## Adjustment
@@ -114,3 +114,7 @@ open BatchRename.exe
 12. Filter + Search the file or folder 
 13. Strong Responsive UI to ensure the WPF UI has not broke down
 14. Customize the Window with `Fluent.RibbonWindow` and hook up with keyboard 
+
+## Demo 
+
+https://kapwi.ng/w/WCl5fNsXxZ

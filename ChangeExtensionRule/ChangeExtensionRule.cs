@@ -27,7 +27,7 @@ namespace BatchRename
 
         public RuleParameterEditDialog EditDialog()
         {
-            ruleParameterEditDialog = new RuleParameterEditDialog(Format, RuleName, new List<string>() { "Current extension to change (Leave this field blank if you want extension changes in all items)", "New extension to replace with" });
+            ruleParameterEditDialog = new RuleParameterEditDialog(Format, RuleName, new List<string>() { "Current extension to change", "New extension to replace with" });
             ruleParameterEditDialog.addBtn.Click += AddBtn_Clicked;
             return ruleParameterEditDialog;
         }
